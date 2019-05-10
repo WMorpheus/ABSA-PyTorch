@@ -18,14 +18,15 @@ from models import LSTM, IAN, MemNet, RAM, TD_LSTM, Cabasc, ATAE_LSTM, TNet_LF, 
 from models.aen import CrossEntropyLoss_LSR, AEN, AEN_BERT
 from models.bert_spc import BERT_SPC
 
+bert_path='/data/bert-pretrained-models/bert-base-uncased'
 
 class Instructor:
     def __init__(self, opt):
         self.opt = opt
 
         if 'bert' in opt.model_name:
-            tokenizer = Tokenizer4Bert(opt.max_seq_len, opt.pretrained_bert_name)
-            bert = BertModel.from_pretrained(opt.pretrained_bert_name)
+            tokenizer = Tokenizer4Bert(opt.max_seq_len, os.path.join(bert_path,'bert-base-uncased-vocab.txt'))
+            bert = BertModel.from_pretrained(bert_path)
             # freeze pretrained bert params
             # for param in bert.parameters():
             #     param.requires_grad = False
